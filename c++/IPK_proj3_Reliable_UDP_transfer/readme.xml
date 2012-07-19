@@ -1,0 +1,28 @@
+<ipk-projekt-3>
+<autor>BRANISLAV BLASKOVIC</autor>
+<login>xblask00@stud.fit.vutbr.cz</login>
+<datum>29.04.2012</datum>
+<soubory>
+	<soubor jmeno="Base64Encoder.cpp" autor="Rene Nyffenegger"/>
+    <soubor jmeno="Base64Encoder.h" autor="Rene Nyffenegger"/>
+    <soubor jmeno="udt.h" autor="Ondrej Rysavy"/>
+    <soubor jmeno="rdtserver.cpp" autor="Branislav Blaskovic"/>
+    <soubor jmeno="rdtclient.cpp" autor="Branislav Blaskovic"/>
+    <soubor jmeno="xmlparser.h" autor="Branislav Blaskovic"/>
+    <soubor jmeno="Makefile" autor="Branislav Blaskovic"/>
+</soubory>
+<protokol>
+Protokol som implementoval ako Selective repeat s pohyblivym oknom a s potvrdzovanim packetov ACK.
+Packety cislujem od cisla 1, toto poradove cislo ukladam do hlavicky. Posledny packet ma cislo 0. 
+Najprv zaslem vsetky packety, okrem posledneho. Ak na vsetky packety dostanem odpoved ACK, az potom
+zaslem posledny packet a cakam taktiez na ACK odpoved od serveru.
+
+Velkost okna som zvolil na 10 packetov, po urcitych testoch, mi to vyslo ako najidealnejsia hodnota.
+Na odpoved ACK cakam 2 sekundy. 
+
+Ako zaklad pre aplikaciu som pouzil ukazkovy priklad z informacneho systemu WIS.
+
+Aplikaciu najviac brzdy konecne radenie prijatych paketov. Tento proces sa mi nepodarilo dostatocne 
+optimalizovat.
+</protokol>
+</ipk-projekt-3>
