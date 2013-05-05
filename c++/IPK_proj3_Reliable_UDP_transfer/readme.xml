@@ -22,7 +22,7 @@ Na odpoved ACK cakam 2 sekundy.
 
 Ako zaklad pre aplikaciu som pouzil ukazkovy priklad z informacneho systemu WIS.
 
-Aplikaciu najviac brzdy konecne radenie prijatych paketov. Tento proces sa mi nepodarilo dostatocne 
+Aplikaciu najviac brzdi konecne radenie prijatych paketov. Tento proces sa mi nepodarilo dostatocne 
 optimalizovat.
 </protokol>
 </ipk-projekt-3>
