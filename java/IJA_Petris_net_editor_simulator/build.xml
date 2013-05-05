@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="ija2012" basedir=".">
+
+	<path id="classpath">
+		<fileset dir="lib" includes="**/*.jar"/>
+	</path>
+  
+	<target name="clean">
+		<delete dir="build"/>
+		<delete dir="doc"/>
+		<delete dir="dest-client"/>
+		<delete dir="dest-server"/>
+	</target>
+
+	<target name="javadoc">
+
+		<mkdir dir="doc"/>
+		<javadoc
+			access="private"
+			destdir="doc"
+			use="true"
+			windowtitle="Petri's nets"
+			doctitle="Petri's nets"
+			footer="Created by Pavlina Bartikova and Branislav Blaskovic"
+		>
+
+			<fileset dir="src" defaultexcludes="yes">
+				<include name="**/*.java"/>
+			</fileset>
+		</javadoc>
+		
+	</target>
+
+	<target name="compile" depends="javadoc">
+
+		<mkdir dir="build"/>
+		<javac srcdir="src" destdir="build" classpathref="classpath" includeantruntime="false">
+			<compilerarg value="-Xlint:none"/>
+		</javac>
+		
+		<mkdir dir="dest-client"/>
+		<jar destfile="dest-client/ija2012-client.jar" basedir="build">
+			<manifest>
+				<attribute name="Main-Class" value="ija.petri.client.ClientMain"/>
+			</manifest>
+		</jar>
+
+		<mkdir dir="dest-server"/>
+		<jar destfile="dest-server/ija2012-server.jar" basedir="build">
+			<manifest>
+				<attribute name="Main-Class" value="ija.petri.server.ServerMain"/>
+			</manifest>
+		</jar>
+
+	</target>
+
+	<target name="run">
+		<java jar="dest-client/ija2012-client.jar" fork="true"/>
+		<java jar="dest-server/ija2012-server.jar" fork="true"/>
+	</target>
+
+	<target name="client">
+		<java jar="dest-client/ija2012-client.jar" fork="true"/>
+	</target>
+
+	<target name="server">
+		<java jar="dest-server/ija2012-server.jar" fork="true">
+			<arg line="${args}"/>
+		</java>
+	</target>
+
+</project>
+
