@@ -1,0 +1,60 @@
+Proxy DNS generujuce statistiky dotazov
+---------------------------------------
+
+Autor: Branislav Blaskovic
+
+Program 'dns_stat' naslucha na zadanom porte (alebo default dns porte 53) na DNS packet poziadavky.
+V pripade ze zachyti packet, precita ho a ulozi do statistik. Preposle ho na zvoleny DNS server a caka na odpoved.
+Ak mu pride odpoved, preposle ju naspat klientovi. Program na odpoved caka len zvoleny cas, ktory sa da urcit
+v milisekundach argumentom '-timeout'. Ak DNS server neodpovie do zvoleneho casu, je mozne automaticky tento
+server vyhodit zo zoznamu pomocou prepinacu '-remove-broken'.
+
+Statistiky sa ukladaju len pre tie data, o ktore ma pouzivatel zaujem, aby sa setrilo pamatou. Prepinace sa daju
+rozne kombinovat a tym si vytvarat statistiky podla toho, co nas zaujima. V pripade, ze nezadame ziadny argument
+spojeny so statistiky, program vypise len celkovy pocet DNS dotazov.
+
+Program vypise aktualne statistiky po obdrzani signalu SIGUSR1 a pokracuje v logovani. Korektne sa ukoncuje
+signalom SIGINT alebo SIGTERM.
+
+Program ma implementovany aj bonus '-histogram', ktory vypisuje specialne statistiky - priemerny pocet dotazov
+v danej hodine dna v percentach a vykresluje do grafu.
+
+DNS Proxy by Branislav Blaskovic (xblask00)
+        Synopsis: dns_stat -l <ip> -p <port> -s <server>
+        -type - statistics by type
+        -source - statistics by source
+        -destination - statistics by destination
+        -hour - add statistics for last hour
+        -average - add average statistics for hour
+        -histogram - histogram for hours of day
+        -timeout - time in milliseconds for DNS server timeout (default: 1000)
+        -remove-broken - if DNS server is broken (timeout), remove it from list
+        Multiple -s <server> arguments are allowed.
+
+
+Priklady pouzitia:
+------------------
+
+dns_stat -p 1234 -l 127.0.0.1 -s 8.8.8.8
+ - bude nasluchat len na adrese 127.0.0.1 a porte 1234 s vyuzitim DNS serveru 8.8.8.8
+
+dns_stat -type -destination -source -average -hour -histogram -s 8.8.8.8
+ - Pri obdrzani signalu SIGUSR1 vypise vsetky mozne statistiky
+
+dns_stat -s 8.8.8.8 -s 8.8.4.4 -s 1.2.3.4 -timeout 200 -remove-broken
+ - Pre dotazy bude postupne pouzivat zadane DNS servery. Ak niektory z nich neodpovie skor ako do 200 milisekund, vyradi sa zo zoznamu a uz nebude pouzity
+
+Odovzdane subory:
+-----------------
+
+Makefile
+Readme
+manual.pdf
+dns_listener.class.cpp
+dns_listener.class.h
+dns_stat.cpp
+packet.class.cpp
+packet.class.h
+statistic.class.cpp
+statistic.class.h
+
